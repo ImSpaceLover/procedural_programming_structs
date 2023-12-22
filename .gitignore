@@ -361,3 +361,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/proc_prog_15_sort.c
+/proc_prog_15_search.c
+/garbage
+/null
+/proc_prog_15.vcxproj
