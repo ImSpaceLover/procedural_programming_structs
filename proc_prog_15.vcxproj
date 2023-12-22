@@ -130,14 +130,12 @@
     <ClCompile Include="proc_prog_15_search.c" />
     <ClCompile Include="proc_prog_15_sort.c" />
     <ClCompile Include="pupil.c" />
-    <ClCompile Include="test.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pupil.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ListOfPupils.bin" />
-    <None Include="test.bin" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
