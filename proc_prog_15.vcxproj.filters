@@ -21,9 +21,6 @@
     <ClCompile Include="pupil.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="test.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="proc_prog_15_sort.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -34,9 +31,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="test.bin">
-      <Filter>Source Files</Filter>
-    </None>
     <None Include="ListOfPupils.bin">
       <Filter>Source Files</Filter>
     </None>
