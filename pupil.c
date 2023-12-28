@@ -140,7 +140,7 @@ time_t date_to_unix(int day, month month, int year) {
 	date.tm_year = year - 1900;  // Year minus 1900
 	date.tm_mon = month - 1;             // Month (0-11, so 0 represents January)
 	date.tm_mday = day;
-	date.tm_hour = 0;
+	date.tm_hour = 12;
 	date.tm_min = 0;
 	date.tm_sec = 0;
 	time_t unix = mktime(&date);
@@ -228,17 +228,22 @@ void Prepend(List* L, Pupil* e) {
 	L->First = e;
 }
 
-void Insert(List* L, size_t index, Pupil* e) {
-	if (index > Size(L)) return;
-	Pupil* insert = GetElement(L, index);
-	if (L->First == NULL) {
-		L->First = e;
-		return;
+void Insert(List* L, size_t index, Pupil* p) {
+	if (index > Size(L) || index < 0) return;
+
+	if (index == 0) {
+		p->next = L->First;
+		L->First->prev = p;
+		L->First = p;
 	}
-	e->next = insert->next;
-	if (e->next) e->next->prev = e;
-	e->prev = insert;
-	insert->next = e;
+	else {
+		Pupil* insert = GetElement(L, index - 1);
+		p->next = insert->next;
+		if (p->next) p->next->prev = p;
+		p->prev = insert;
+		insert->next = p;
+		if (L->Last == insert) L->Last = p;
+	}
 }
 
 //определить следующий элемент за e
@@ -314,9 +319,9 @@ void Swap(size_t index_1, size_t index_2, List* l) {
 
 	else {
 		if (e1->next) next_temp = e1->next;
-		if (e1->prev) next_temp = e1->prev;
+		if (e1->prev) prev_temp = e1->prev;
 		if (prev_temp) prev_temp->next = e2;
-		if (prev_temp) next_temp->prev = e2;
+		if (next_temp) next_temp->prev = e2;
 		if (e2->prev) e2->prev->next = e1;
 		if (e2->next) e2->next->prev = e1;
 		e1->next = e2->next;
@@ -331,7 +336,8 @@ void Swap(size_t index_1, size_t index_2, List* l) {
 	else if (e2->next == NULL) l->Last = e2;
 }
 
-void Delete(Pupil* e) {
+void DeleteElem(List* L, size_t index) {
+	Pupil* e = GetElement(L, index);
 	Pupil* next = NULL;
 	Pupil* prev = NULL;
 
@@ -343,10 +349,13 @@ void Delete(Pupil* e) {
 
 	e->prev = NULL;
 	e->next = NULL;
+
+	if (L->First == e) L->First = next;
+	else if (L->Last == e) L->Last = prev;
 }
 
-void Free(Pupil* e) {
-	Delete(e);
+void Free(List* L, Pupil* e) {
+	DeleteElem(e, L);
 	free(e);
 }
 
@@ -354,11 +363,11 @@ void FreeList(List* L) {
 	Pupil* last = L->Last;
 	Pupil* current = last->prev;
 	while (current != NULL) {
-		Free(last);
+		Free(L, last);
 		last = current;
 		current = current->prev;
 	}
-	Free(last);
+	Free(L, last);
 	L->First = NULL;
 	L->Last = NULL;
 }

@@ -12,28 +12,36 @@ int main() {
 
 	//объявляем путь файла с записанным списком школьников и путь файла куда запишем отсортированный список
 	char path_in[] = "./ListOfPupils.bin";
-	char path_out[] = "./ListSorted.bin";
+	char path_out[] = "./ListModified.bin";
 
-	//создаём два двусвязных списка
-	List list_1;
-	List list_2;
+	//создаём двусвязный список и элемент типа Школьник
+	List list;
+	Pupil pupil;
 
-	//инициализируем первый список, устанавливая значения указателей первого и последнего элемента на NULL
-	InitList(&list_1);
+	//инициализируем список и элемент Школьник
+	InitList(&list);
+	InitElement(&pupil);
 	//загружаем список из файла
-	LoadFile(&list_1, path_in);
+	LoadFile(&list, path_in);
+	//Вводим данные Школьника с клавиатуры
+	FillPupilInfo(&pupil);
 
-	PrintList(&list_1);
-	
-	//копируем список в новый
-	list_2 = CopyList(&list_1);
-	//сортируем новый список на месте 
-	Sort(&list_2);
-	
-	printf("\nОтсортированный список:\n");
-	PrintList(&list_2);
+	printf("Первый список: \n");
 
-	WriteToFile(&list_2, path_out);
+	PrintList(&list);
+
+	//Вставляем элемент в список по индексу
+	Insert(&list, 5, &pupil);
+	// Меняем местами 2 элемента по индексу
+	Swap(4, 6, &list);
+	// Удаляем элемент по индексу
+	DeleteElem(&list, 3);
+
+	printf("\nВторой список: \n");
+
+	PrintList(&list);
 	
+
+	FreeList(&list);
 	return 0;
 }

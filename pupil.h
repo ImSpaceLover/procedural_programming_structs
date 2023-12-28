@@ -68,9 +68,9 @@ int Size(List* L);
 
 void Swap(size_t index_1, size_t index_2, List* l);
 
-void Delete(Pupil* e);
+void DeleteElem(List* L, size_t index);
 
-void Free(Pupil* e);
+void Free(List* L, Pupil* e);
 
 void FreeList(List* L);
 
